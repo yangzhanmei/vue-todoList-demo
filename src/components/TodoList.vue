@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>TodoList</h2>
+    <h2 class="header">TodoList</h2>
     <input  v-model="value" ref="valueRef" placeholder="please input" @keydown="submit($event)"/>
     <ul>
     <li v-for="(todo,index) in todoList" :key="todo.id">
@@ -31,3 +31,6 @@ export default {
   }
 }
 </script>
+<style scoped>
+  @import '../styles/index.less'
+</style>
