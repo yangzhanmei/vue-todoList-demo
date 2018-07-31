@@ -1,22 +1,31 @@
 <template>
   <div>
     <h2 class="header">TodoList</h2>
-    <input  v-model="value" ref="valueRef" placeholder="please input" @keydown="submit($event)"/>
+    <input  v-model="value" ref="valueRef" placeholder="please input" @keydown="addTodo($event)"/>
     <ul>
     <li v-for="(todo,index) in todoList" :key="todo.id">
-      {{todo}} <button v-on:click="deleteTodo(index)">X</button>
+      {{todo.name}} <button v-on:click="deleteTodo(index)">X</button>
     </li>
     </ul>
   </div>
 </template>
 <script>
+import axios from 'axios'
+
 export default {
   name: 'TodoList',
   data () {
     return {
-      todoList: ['1', '2', '3', '4'],
+      todoList: [],
       value: ''
     }
+  },
+  created: function () {
+    this.$nextTick(async function () {
+      const res = await axios.get('http://127.0.0.1:9090/')
+      const { data } = res
+      this.todoList = data
+    })
   },
   methods: {
     submit (e) {
@@ -27,6 +36,12 @@ export default {
     },
     deleteTodo (index) {
       this.todoList.splice(index, 1)
+    },
+    async addTodo (e) {
+      if (e.keyCode === 13) {
+        const res = await axios.post('http://127.0.0.1:9090/', this.value)
+        console.log(res)
+      }
     }
   }
 }
