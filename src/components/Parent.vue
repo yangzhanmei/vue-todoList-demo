@@ -2,7 +2,6 @@
   <div>
    parent
    <child :parentValue="parentValue"/>
-   <otherChild :parentValue="parentValue"/>
   </div>
 </template>
 <script>
